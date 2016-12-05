@@ -495,7 +495,10 @@ namespace ProvisionSample
         /// <returns></returns>
         static async Task<Import> ImportPbix(string workspaceCollectionName, string workspaceId, string datasetName, string filePath)
         {
-            using (var fileStream = File.OpenRead(filePath.Trim('"')))
+            datasetName = datasetName.Contains(".pbix") ? datasetName :
+             datasetName + ".pbix";
+
+            using (var fileStream = File.OpenRead(filePath.Trim('"') + "//" + datasetName))
             {
                 using (var client = await CreateClient())
                 {
